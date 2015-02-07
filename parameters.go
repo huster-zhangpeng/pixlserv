@@ -115,10 +115,6 @@ func parseParameters(parametersStr string) (Params, error) {
 				return params, fmt.Errorf("invalid value for %q", key)
 			}
 			params.filter = value
-        case parameterText:
-			if len(value) > 0 {
-                params.text = value
-			}
 		}
 	}
 
