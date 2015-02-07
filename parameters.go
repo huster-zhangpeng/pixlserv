@@ -14,6 +14,7 @@ const (
 	parameterGravity  = "g"
 	parameterFilter   = "f"
 	parameterScale    = "s"
+    parameterText     = "t"
 
 	// CroppingModeExact crops an image exactly to given dimensions
 	CroppingModeExact = "e"
@@ -40,6 +41,7 @@ const (
 	DefaultCroppingMode = CroppingModeExact
 	DefaultGravity      = GravityNorthWest
 	DefaultFilter       = "none"
+    DefaultText         = ""
 )
 
 var (
@@ -48,14 +50,14 @@ var (
 
 // Params is a struct of parameters specifying an image transformation
 type Params struct {
-	width, height, scale      int
-	cropping, gravity, filter string
+	width, height, scale            int
+	cropping, gravity, filter, text string
 }
 
 // ToString turns parameters into a unique string for each possible assignment of parameters
 func (p Params) ToString() string {
 	// 0 as a value for width or height means that it will be calculated
-	return fmt.Sprintf("%s_%s,%s_%s,%s_%d,%s_%d,%s_%s,%s_%d", parameterCropping, p.cropping, parameterGravity, p.gravity, parameterHeight, p.height, parameterWidth, p.width, parameterFilter, p.filter, parameterScale, p.scale)
+	return fmt.Sprintf("%s_%s,%s_%s,%s_%d,%s_%d,%s_%s,%s_%d,%s_%s", parameterCropping, p.cropping, parameterGravity, p.gravity, parameterHeight, p.height, parameterWidth, p.width, parameterFilter, p.filter, parameterScale, p.scale, parameterText, p.text)
 }
 
 // WithScale returns a copy of a Params struct with the scale set to the given value
@@ -68,7 +70,7 @@ func (p Params) WithScale(scale int) Params {
 // Also validates the parameters to make sure they have valid values
 // w = width, h = height
 func parseParameters(parametersStr string) (Params, error) {
-	params := Params{0, 0, DefaultScale, DefaultCroppingMode, DefaultGravity, DefaultFilter}
+	params := Params{0, 0, DefaultScale, DefaultCroppingMode, DefaultGravity, DefaultFilter, DefaultText}
 	parts := strings.Split(parametersStr, ",")
 	for _, part := range parts {
 		keyAndValue := strings.SplitN(part, "_", 2)
@@ -113,6 +115,10 @@ func parseParameters(parametersStr string) (Params, error) {
 				return params, fmt.Errorf("invalid value for %q", key)
 			}
 			params.filter = value
+        case parameterText:
+			if len(value) > 0 {
+                params.text = value
+			}
 		}
 	}
 
