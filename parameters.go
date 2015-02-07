@@ -14,7 +14,7 @@ const (
 	parameterGravity  = "g"
 	parameterFilter   = "f"
 	parameterScale    = "s"
-    parameterText     = "t"
+    parameterText     = "m"
 
 	// CroppingModeExact crops an image exactly to given dimensions
 	CroppingModeExact = "e"
