@@ -298,9 +298,6 @@ func transformCropAndResize(img image.Image, transformation *Transformation) (im
 			x := pt.X
 			y := pt.Y + int(c.PointToFix32(fontMetrics.ascent)>>8)
 
-            if parameters.text != nil {
-                text.content = parameters.text
-            }
 			_, err := c.DrawString(text.content, freetype.Pt(x, y))
 			if err != nil {
 				log.Println("Error adding text:", err)

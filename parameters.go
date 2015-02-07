@@ -62,7 +62,7 @@ func (p Params) ToString() string {
 
 // WithScale returns a copy of a Params struct with the scale set to the given value
 func (p Params) WithScale(scale int) Params {
-	return Params{p.width, p.height, scale, p.cropping, p.gravity, p.filter}
+	return Params{p.width, p.height, scale, p.cropping, p.gravity, p.filter, p.text}
 }
 
 // Turns a string like "w_400,h_300" and an image path into a Params struct

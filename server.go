@@ -246,6 +246,13 @@ func transformationHandler(params martini.Params) (int, string) {
 		if !ok {
 			return http.StatusBadRequest, "Unknown transformation: " + transformationName
 		}
+        if transformationName == 'withtext' {
+            parameters, err := parseParameters(params["parameters"])
+            if err != nil {
+                return http.StatusBadRequest, err.Error()
+            }
+            transformation.texts[0].content = parameters.text
+        }
 	} else if Config.allowCustomTransformations {
 		parameters, err := parseParameters(params["parameters"])
 		if err != nil {
